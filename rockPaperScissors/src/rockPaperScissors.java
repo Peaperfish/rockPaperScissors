@@ -6,8 +6,38 @@ public class rockPaperScissors {
     private static final String PAPER = "paper";
     private static final String SCISSORS = "scissors";
 
-    private int userScore;
-    private int computerScore;
+    public void play() {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        int userScore = 0;
+        int computerScore = 0;
+
+        while (true) {
+            System.out.print("Enter your choice (rock, paper, or scissors): ");
+            String userChoice = scanner.nextLine();
+
+            if (userChoice.isEmpty()) {
+                System.out.printf("Your score: %d, Computer score: %d%n \n Thanks for playing! ", userScore, computerScore);
+                break;
+            }
+
+            String computerChoice = generateComputerChoice(random);
+            System.out.printf("User: %s%n", userChoice);
+            System.out.printf("Computer: %s%n", computerChoice);
+
+            String winner = getWinner(userChoice, computerChoice);
+            System.out.println(winner);
+
+            if (winner.equals("User wins! \n")) {
+                userScore++;
+            } else if (winner.equals("Computer wins! \n")) {
+                computerScore++;
+            }
+
+            System.out.printf("Score: You %d, Computer %d%n%n", userScore, computerScore);
+        }
+    }
+
 
     private static String generateComputerChoice(Random random) {
         int choiceIndex = random.nextInt(3);
@@ -29,36 +59,6 @@ public class rockPaperScissors {
             return "User wins! \n";
         } else {
             return "Computer wins! \n";
-        }
-    }
-
-    public void play() {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-
-        while (true) {
-            System.out.print("Enter your choice (rock, paper, or scissors): ");
-            String userChoice = scanner.nextLine();
-
-            if (userChoice.isEmpty()) {
-                System.out.println("Thanks for playing!");
-                System.out.printf("Final score: User %d - %d Computer%n", userScore, computerScore);
-                break;
-            }
-
-            String computerChoice = generateComputerChoice(random);
-            System.out.printf("User: %s%n", userChoice);
-            System.out.printf("Computer: %s%n", computerChoice);
-
-            String winner = getWinner(userChoice, computerChoice);
-            System.out.println(winner);
-
-            if (winner.equals("User wins!")) {
-                userScore++;
-            } else if (winner.equals("Computer wins!")) {
-                computerScore++;
-            }
-            System.out.printf("Score: User %d - %d Computer%n", userScore, computerScore);
         }
     }
 }
